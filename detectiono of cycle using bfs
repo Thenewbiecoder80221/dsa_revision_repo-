@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool iscycleund(int start, vector<vector<int>> &adj, vector<bool> &vis) {
+        queue<pair<int,int>> q;
+        q.push({start, -1});
+        vis[start] = true;
+
+        while (!q.empty()) {
+            int u = q.front().first;
+            int parent = q.front().second;
+            q.pop();
+
+            for (auto it : adj[u]) {
+                if (!vis[it]) {
+                    vis[it] = true;
+                    q.push({it, u});
+                } else if (it != parent) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool isCycle(int V, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(V+1);
+        vector<bool> vis(V+1, false);
+
+        // Build adjacency list from edge list
+        for (auto &e : edges) {
+            int u = e[0];
+            int v = e[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        // BFS for all components
+        for (int i = 1; i <= V; i++) {
+            if (!vis[i]) {
+                if (iscycleund(i, adj, vis)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+};
