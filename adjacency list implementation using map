@@ -1,0 +1,46 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+  GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+  C#, OCaml, VB, Perl, Swift, Prolog, Javascript, Pascal, COBOL, HTML, CSS, JS
+  Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <bits/stdc++.h>
+using namespace std;
+class graph {
+public:
+  unordered_map<int, list<int>> adj;
+  void addedge(int u, int v, bool direction) {
+    adj[u].push_back(v);
+    if (direction == 0) {
+      adj[v].push_back(u);
+    }
+  }
+  void printadj() {
+    for (auto it : adj) {
+      cout << it.first << "->";
+
+      for (auto i : it.second) {
+        cout << i << ","<<endl;
+      }
+    }
+    cout << endl;
+  }
+};
+int main() {
+  int n;
+  cout << "enter the number of nodes<<endl";
+  cin >> n;
+  int m;
+  cout << "enter the number of edges";
+  cin >> m;
+  graph g;
+  for (int i = 0; i < m; i++) {
+    int u, v;
+    cin >> u >> v;
+    g.addedge(u, v, 0);
+  }
+  g.printadj();
+  return 0;
+}
