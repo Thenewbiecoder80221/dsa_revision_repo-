@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool dfs(int node, int parent, vector<vector<int>>& adj, vector<bool>& vis) {
+        vis[node] = true;
+
+        for (auto nxt : adj[node]) {
+            if (!vis[nxt]) {
+                if (dfs(nxt, node, adj, vis))
+                    return true;
+            } else if (nxt != parent) {
+                return true; // found a cycle
+            }
+        }
+        return false;
+    }
+
+    bool isCycle(int V, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(V + 1);
+        vector<bool> vis(V + 1, false);
+
+        // Build adjacency list from edge pairs
+        for (auto &e : edges) {
+            int u = e[0];
+            int v = e[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        // In case graph is disconnected
+        for (int i = 1; i <= V; i++) {
+            if (!vis[i]) {
+                if (dfs(i, -1, adj, vis)) return true;
+            }
+        }
+        return false;
+    }
+};
+
