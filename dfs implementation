@@ -1,0 +1,26 @@
+class Solution {
+ 
+  public:
+    void Dfs(vector<int>&dfs1,int start,int n,vector<vector<int>>&adj,vector<int>&visited){
+        visited[start]=1;
+        dfs1.push_back(start);
+        for(int it:adj[start]){
+            if(!visited[it]){
+                visited[it]=1;
+                    Dfs(dfs1,it,n,adj,visited);
+            }
+        }
+        
+    }
+    vector<int> dfs(vector<vector<int>>& adj) {
+        int n=adj.size();
+        int start=0;
+        vector<int>dfs1;
+        vector<int>visited(n+1,0);
+        Dfs(dfs1,start,n,adj,visited);
+        return dfs1;
+
+        
+        
+    }
+};
